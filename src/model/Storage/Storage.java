@@ -4,12 +4,12 @@
  */
 package model.Storage;
 
-import core.Author;
-import core.Book;
-import core.Manager;
-import core.Narrator;
-import core.Publisher;
-import core.Stand;
+import model.person.Author;
+import model.book.Book;
+import model.person.Manager;
+import model.person.Narrator;
+import model.Publisher;
+import model.Stand;
 import java.util.ArrayList;
 
 /**
