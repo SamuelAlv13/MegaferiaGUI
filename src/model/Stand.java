@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+
 import java.util.ArrayList;
 
 /**
@@ -39,16 +40,6 @@ public class Stand {
     
     public int getPublisherQuantity() {
         return this.publishers.size();
-    }
-     //(Prototype)
-    public Stand(Stand other) {
-        this.id = other.id;
-        this.price = other.price;
-        this.publishers = new ArrayList<>(other.publishers);
-    }
-    
-    public Stand clone() {
-        return new Stand(this);
     }
     
 }

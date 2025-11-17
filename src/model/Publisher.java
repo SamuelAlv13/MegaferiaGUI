@@ -60,18 +60,4 @@ public class Publisher {
         this.stands.add(stand);
     }
     
-    //Prototype
-    public Publisher(Publisher other) {
-        this.nit = other.nit;
-        this.name = other.name;
-        this.address = other.address;
-        this.manager = other.manager;
-        this.books = new ArrayList<>(other.books);
-        this.stands = new ArrayList<>(other.stands);
-    }
-    
-    public Publisher clone() {
-        return new Publisher(this);
-    }
-    
 }

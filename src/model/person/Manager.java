@@ -26,13 +26,4 @@ public class Manager extends Person {
         this.publisher = publisher;
     }
     
-    //Prototype
-     public Manager(Manager other) {
-        super(other.id, other.firstname, other.lastname);
-        this.publisher = other.publisher;
-    }
-  
-    public Manager clone() {
-        return new Manager(this);
-    }
 }
