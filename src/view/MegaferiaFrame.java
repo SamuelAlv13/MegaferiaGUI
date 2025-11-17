@@ -5,15 +5,15 @@
 package view;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import core.Audiobook;
-import core.Author;
-import core.Book;
-import core.DigitalBook;
-import core.Manager;
-import core.Narrator;
-import core.PrintedBook;
-import core.Publisher;
-import core.Stand;
+import model.book.Audiobook;
+import model.person.Author;
+import model.book.Book;
+import model.book.DigitalBook;
+import model.person.Manager;
+import model.person.Narrator;
+import model.book.PrintedBook;
+import model.Publisher;
+import model.Stand;
 import java.util.ArrayList;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
