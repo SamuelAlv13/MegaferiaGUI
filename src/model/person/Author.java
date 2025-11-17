@@ -42,5 +42,13 @@ public class Author extends Person {
         }
         return publishers.size();
     }
+    //Prototype
+    public Author(Author other) {
+        super(other.id, other.firstname, other.lastname);
+        this.books = new ArrayList<>(other.books);
+    }
     
+    public Author clone() {
+        return new Author(this);
+    }
 }
