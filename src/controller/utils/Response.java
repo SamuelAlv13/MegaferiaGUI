@@ -29,7 +29,7 @@ public class Response {
         return message;
     }
 
-    public int getEstatus() {
+    public int getStatus() {
         return status;
     }
 

@@ -24,7 +24,7 @@ public class Audiobook extends Book {
         this.duration = duration;
         this.narrador = narrator;
         
-        
+        this.narrador.addBook(this);
     }
 
     public int getDuration() {

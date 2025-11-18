@@ -35,5 +35,5 @@ public abstract class Person {
     public String getFullname() {
         return firstname + " " + lastname;
     }
-    
+   
 }
