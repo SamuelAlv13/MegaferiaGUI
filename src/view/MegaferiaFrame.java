@@ -1421,7 +1421,7 @@ String id = CrearStandIDtxt.getText();
     }//GEN-LAST:event_CrearStandBtnActionPerformed
 
     private void CrearAutorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearAutorBtnActionPerformed
-String id = CreatePersonaIDBtn.getText();
+    String id = CreatePersonaIDBtn.getText();
     String firstname = CreatePersonaNombreBtn.getText();
     String lastname = CreatePersonaApellidoBtn.getText();
 
@@ -1482,16 +1482,16 @@ String id = CreatePersonaIDBtn.getText();
     );
 
     if (response.getStatus() >= 500) {
-        JOptionPane.showMessageDialog(this, response.getMessage(), " Error Interno", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, response.getMessage(), "Error Interno", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     if (response.getStatus() >= 400) {
-        JOptionPane.showMessageDialog(this, response.getMessage(), " Advertencia", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    JOptionPane.showMessageDialog(this, response.getMessage(), " Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(this, response.getMessage(), "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
 
     Narrator narrator = (Narrator) response.getObject();
 

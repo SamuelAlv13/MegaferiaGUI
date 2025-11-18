@@ -42,5 +42,9 @@ public class Author extends Person {
         }
         return publishers.size();
     }
+     @Override
+    public Author clone() throws CloneNotSupportedException {
+        return new Author(this.id, this.firstname, this.lastname);
+    }
     
 }

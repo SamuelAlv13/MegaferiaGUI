@@ -13,29 +13,56 @@ import model.Storage.Storage;
  *
  * @author mayma
  */
+package controller;
+
+import model.Storage.Storage;
+import model.Stand;
+import utils.Response;
+import utils.Status;
+
 public class StandController {
 
-    public static Response createStand(String id, String price) {
+    private Storage storage;
+
+    public StandController() {
+        this.storage = Storage.getInstance();
+    }
+
+    public Response createStand(long id, double price) {
+
+        // VALIDACIONES
+        if (id < 0 || String.valueOf(id).length() > 15) {
+            return new Response("El ID del stand no es válido", Status.BAD_REQUEST);
+        }
+
+        if (price <= 0) {
+            return new Response("El precio debe ser mayor que 0", Status.BAD_REQUEST);
+        }
+
+        if (storage.getStand(id) != null) {
+            return new Response("El stand con ese ID ya existe", Status.BAD_REQUEST);
+        }
+
+        // CREAR OBJETO
+        Stand stand = new Stand(id, price);
+
+        // GUARDAR
+        boolean added = storage.addStand(stand);
+
+        if (!added) {
+            return new Response("Error al guardar el stand", Status.INTERNAL_SERVER_ERROR);
+        }
+
         try {
-            long standId = Long.parseLong(id);
-            double standPrice = Double.parseDouble(price);
+            // DEVOLVER CLON (PROTOTYPE)
+            Stand cloned = stand.clone();
+            return new Response("Stand creado exitosamente", Status.CREATED, cloned);
 
-            Stand stand = new Stand(standId, standPrice);
-
-            boolean added = Storage.getInstance().addStand(stand);
-
-            if (!added) {
-                return new Response("El stand con ID " + id + " ya existe", Status.BAD_REQUEST);
-            }
-
-            return new Response("Stand creado correctamente", Status.CREATED, stand);
-
-        } catch (NumberFormatException e) {
-            return new Response("Formato inválido: id debe ser entero y precio numérico", Status.BAD_REQUEST);
-        } catch (Exception e) {
-            return new Response("Error inesperado: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+        } catch (CloneNotSupportedException e) {
+            return new Response("No se pudo clonar el stand", Status.INTERNAL_SERVER_ERROR);
         }
     }
 }
+
 
 

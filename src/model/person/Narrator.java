@@ -29,7 +29,7 @@ public class Narrator extends Person {
     }
      /////PROTOTYPE MVCEXAMPLE
     @Override
-    public Person clone() throws CloneNotSupportedException {
+    public Narrator clone() throws CloneNotSupportedException {
         return new Narrator(this.id, this.firstname, this.lastname);
     }
 }
