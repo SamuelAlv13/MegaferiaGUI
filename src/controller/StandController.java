@@ -13,12 +13,9 @@ import model.Storage.Storage;
  *
  * @author mayma
  */
-package controller;
 
-import model.Storage.Storage;
-import model.Stand;
-import utils.Response;
-import utils.Status;
+import controller.utils.Response;
+import controller.utils.Status;
 
 public class StandController {
 
@@ -53,14 +50,10 @@ public class StandController {
             return new Response("Error al guardar el stand", Status.INTERNAL_SERVER_ERROR);
         }
 
-        try {
-            // DEVOLVER CLON (PROTOTYPE)
-            Stand cloned = stand.clone();
-            return new Response("Stand creado exitosamente", Status.CREATED, cloned);
+        // DEVOLVER CLON (PROTOTYPE)
+        Stand cloned = stand.clone();
+        return new Response("Stand creado exitosamente", Status.CREATED, cloned);
 
-        } catch (CloneNotSupportedException e) {
-            return new Response("No se pudo clonar el stand", Status.INTERNAL_SERVER_ERROR);
-        }
     }
 }
 

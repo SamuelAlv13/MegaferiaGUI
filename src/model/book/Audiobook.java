@@ -4,7 +4,6 @@
  */
 package model.book;
 
-import model.book.Book;
 import java.util.ArrayList;
 import model.person.Author;
 import model.person.Narrator;
@@ -14,17 +13,44 @@ import model.Publisher;
  *
  * @author edangulo
  */
-public class Audiobook extends Book {
+public class AudioBook extends Book {
     
     private int duration;
     private Narrator narrador;
 
-    public Audiobook(String title, ArrayList<Author> authors, String isbn, String genre, String format, double value, Publisher publisher, int duration, Narrator narrator) {
+    // Constructor normal — libro REAL
+    public AudioBook(String title, ArrayList<Author> authors, String isbn, String genre,
+                     String format, double value, Publisher publisher,
+                     int duration, Narrator narrator) {
+
         super(title, authors, isbn, genre, format, value, publisher);
         this.duration = duration;
         this.narrador = narrator;
-        
+
+        // Registro real
         this.narrador.addBook(this);
+    }
+
+    // CONSTRUCTOR COPY — NO registra en el narrador
+    public AudioBook(AudioBook other, ArrayList<Author> clonedAuthors) {
+        super(
+            other.title,
+            clonedAuthors,
+            other.isbn,
+            other.genre,
+            other.format,
+            other.value,
+            other.publisher
+        );
+
+        this.duration = other.duration;
+        this.narrador = other.narrador;
+    }
+
+    @Override
+    public AudioBook clone() throws CloneNotSupportedException {
+        ArrayList<Author> clonedAuthors = new ArrayList<>(this.authors);
+        return new AudioBook(this, clonedAuthors);
     }
 
     public int getDuration() {
@@ -34,5 +60,5 @@ public class Audiobook extends Book {
     public Narrator getNarrador() {
         return narrador;
     }
-    
 }
+

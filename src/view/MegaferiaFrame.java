@@ -10,7 +10,7 @@ import controller.ManagerController;
 import controller.NarratorController;
 import controller.StandController;
 import controller.utils.Response;
-import model.book.Audiobook;
+import model.book.AudioBook;
 import model.person.Author;
 import model.book.Book;
 import model.book.DigitalBook;
@@ -1590,7 +1590,7 @@ String id = CrearStandIDtxt.getText();
                 }
             }
             
-            this.books.add(new Audiobook(title, authors, isbn, genre, format, value, publisher, duration, narrator));
+            this.books.add(new AudioBook(title, authors, isbn, genre, format, value, publisher, duration, narrator));
         }
     }//GEN-LAST:event_CrearLibroBtnActionPerformed
 
@@ -1721,7 +1721,7 @@ String id = CrearStandIDtxt.getText();
         }
         if (search.equals("Audiolibros")) {
             for (Book book : this.books) {
-                if (book instanceof Audiobook audiobook) {
+                if (book instanceof AudioBook audiobook) {
                     String authors = audiobook.getAuthors().get(0).getFullname();
                     for (int i = 1; i < audiobook.getAuthors().size(); i++) {
                         authors += (", " + audiobook.getAuthors().get(i).getFullname());
@@ -1742,7 +1742,7 @@ String id = CrearStandIDtxt.getText();
                 if (book instanceof DigitalBook digitalBook) {
                     model.addRow(new Object[]{digitalBook.getTitle(), authors, digitalBook.getIsbn(), digitalBook.getGenre(), digitalBook.getFormat(), digitalBook.getValue(), digitalBook.getPublisher().getName(), "-", "-", digitalBook.hasHyperlink() ? digitalBook.getHyperlink() : "No", "-", "-"});
                 }
-                if (book instanceof Audiobook audiobook) {
+                if (book instanceof AudioBook audiobook) {
                     model.addRow(new Object[]{audiobook.getTitle(), authors, audiobook.getIsbn(), audiobook.getGenre(), audiobook.getFormat(), audiobook.getValue(), audiobook.getPublisher().getName(), "-", "-", "-", audiobook.getNarrador().getFullname(), audiobook.getDuration()});
                 }
             }
@@ -1775,7 +1775,7 @@ String id = CrearStandIDtxt.getText();
             if (book instanceof DigitalBook digitalBook) {
                 model.addRow(new Object[]{digitalBook.getTitle(), authors, digitalBook.getIsbn(), digitalBook.getGenre(), digitalBook.getFormat(), digitalBook.getValue(), digitalBook.getPublisher().getName(), "-", "-", digitalBook.hasHyperlink() ? digitalBook.getHyperlink() : "No", "-", "-"});
             }
-            if (book instanceof Audiobook audiobook) {
+            if (book instanceof AudioBook audiobook) {
                 model.addRow(new Object[]{audiobook.getTitle(), authors, audiobook.getIsbn(), audiobook.getGenre(), audiobook.getFormat(), audiobook.getValue(), audiobook.getPublisher().getName(), "-", "-", "-", audiobook.getNarrador().getFullname(), audiobook.getDuration()});
             }
         }
@@ -1800,7 +1800,7 @@ String id = CrearStandIDtxt.getText();
                 if (book instanceof DigitalBook digitalBook) {
                     model.addRow(new Object[]{digitalBook.getTitle(), authors, digitalBook.getIsbn(), digitalBook.getGenre(), digitalBook.getFormat(), digitalBook.getValue(), digitalBook.getPublisher().getName(), "-", "-", digitalBook.hasHyperlink() ? digitalBook.getHyperlink() : "No", "-", "-"});
                 }
-                if (book instanceof Audiobook audiobook) {
+                if (book instanceof AudioBook audiobook) {
                     model.addRow(new Object[]{audiobook.getTitle(), authors, audiobook.getIsbn(), audiobook.getGenre(), audiobook.getFormat(), audiobook.getValue(), audiobook.getPublisher().getName(), "-", "-", "-", audiobook.getNarrador().getFullname(), audiobook.getDuration()});
                 }
             }

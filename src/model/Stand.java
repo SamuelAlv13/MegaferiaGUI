@@ -45,10 +45,9 @@ public class Stand {
         this.id = other.id;
         this.price = other.price;
         this.publishers = new ArrayList<>(other.publishers);
-    }
-    
+    } 
+    @Override
     public Stand clone() {
         return new Stand(this);
     }
-    
 }

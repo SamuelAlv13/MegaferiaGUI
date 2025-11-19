@@ -4,7 +4,6 @@
  */
 package model.book;
 
-import model.book.Book;
 import java.util.ArrayList;
 import model.person.Author;
 import model.Publisher;
@@ -37,5 +36,14 @@ public class DigitalBook extends Book {
     public String getHyperlink() {
         return hyperlink;
     }
-    
+    /////PROTOTYPE MVCEXAMPLE
+    @Override
+    public DigitalBook clone() throws CloneNotSupportedException {
+        ArrayList<Author> clonedAuthors = new ArrayList<>(this.authors);
+        if (this.hasHyperlink) {
+            return new DigitalBook(this.title, clonedAuthors, this.isbn, this.genre, this.format, this.value, this.publisher, this.hyperlink);
+        }else{
+            return new DigitalBook(this.title, clonedAuthors, this.isbn, this.genre, this.format, this.value, this.publisher);
+        }
+    }
 }

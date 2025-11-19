@@ -4,7 +4,6 @@
  */
 package model.book;
 
-import model.book.Book;
 import java.util.ArrayList;
 import model.person.Author;
 import model.Publisher;
@@ -31,5 +30,10 @@ public class PrintedBook extends Book {
     public int getCopies() {
         return copies;
     }
-    
+    /////PROTOTYPE MVCEXAMPLE
+    @Override
+    public PrintedBook clone() throws CloneNotSupportedException {
+        ArrayList<Author> clonedAuthors = new ArrayList<>(this.authors);
+        return new PrintedBook(this.title, clonedAuthors, this.isbn, this.genre, this.format, this.value, this.publisher, this.pages, this.copies);
+    }
 }
