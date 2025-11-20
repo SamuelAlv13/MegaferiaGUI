@@ -4,6 +4,8 @@
  */
 package main;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import javax.swing.UIManager;
 import view.MegaferiaFrame;
 
 /**
@@ -11,8 +13,20 @@ import view.MegaferiaFrame;
  * @author Samuel Alvarado
  */
 public class Main {
-    public static void main(String[] args) {
-        MegaferiaFrame Frame= new MegaferiaFrame();
-        Frame.setVisible(true);
+    
+      public static void main(String args[]) {
+        System.setProperty("flatlaf.useNativeLibrary", "false");
+
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MegaferiaFrame().setVisible(true);
+            }
+        });
     }
 }

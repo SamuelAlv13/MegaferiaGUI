@@ -25,8 +25,11 @@ public class Manager extends Person {
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
-     @Override
+    @Override
     public Manager clone() throws CloneNotSupportedException {
-        return new Manager(this.id, this.firstname, this.lastname);
-    }
+    Manager cloned = new Manager(this.id, this.firstname, this.lastname);
+    cloned.publisher = this.publisher; 
+    return cloned;
+}
+
 }

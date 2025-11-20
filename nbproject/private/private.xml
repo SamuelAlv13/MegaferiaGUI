@@ -4,20 +4,28 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/person/Author.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/Storage/Storage.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/NarratorController.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/Stand.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/StorageController.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/ManagerController.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/PurchaseStandController.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/PublisherController.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/PublisherSelectionController.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/Publisher.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/BookConsultaController.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/view/MegaferiaFrame.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/book/PrintedBook.java</file>
             <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/person/Narrator.java</file>
             <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/person/Manager.java</file>
             <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/StandController.java</file>
-            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/Storage/Storage.java</file>
             <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/AuthorController.java</file>
-            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/AudioBookController.java</file>
-            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/NarratorController.java</file>
-            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/ManagerController.java</file>
-            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/PrintedBookController.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/StandSelectionController.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/book/DigitalBook.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/book/Audiobook.java</file>
             <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/utils/Status.java</file>
-            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/DigitalBookController.java</file>
+            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/book/Book.java</file>
             <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/model/person/Person.java</file>
-            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/PublisherController.java</file>
-            <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/view/MegaferiaFrame.java</file>
             <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/BookController.java</file>
             <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/utils/Response.java</file>
             <file>file:/C:/Users/mayma/Desktop/MegaferiaGUI/src/controller/PersonController.java</file>

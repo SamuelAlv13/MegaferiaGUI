@@ -6,10 +6,20 @@ package view;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import controller.AuthorController;
+import controller.BookController;
+import controller.ConsultaAdicionalController;
+import controller.PublisherSelectionController;
 import controller.ManagerController;
 import controller.NarratorController;
+import controller.PersonController;
+import controller.PublisherController;
+import controller.PublisherSelectionController;
+import controller.PurchaseStandController;
 import controller.StandController;
+import controller.PurchaseStandController;
+import controller.StandSelectionController;
 import controller.utils.Response;
+import controller.utils.Status;
 import model.book.AudioBook;
 import model.person.Author;
 import model.book.Book;
@@ -37,7 +47,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
     private ArrayList<Narrator> narrators;
     private ArrayList<Publisher> publishers;
     private ArrayList<Book> books;
-    
+
     /**
      * Creates new form MegaferiaFrame
      */
@@ -1331,7 +1341,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
             CrearLibroLinktxt.setEnabled(false);
             CrearLibroDuraciontxt.setEnabled(true);
             CrearLibroNarradorComboBox.setEnabled(true);
-            
+
             CrearLibroFormatoCombobox.removeAllItems();
             CrearLibroFormatoCombobox.addItem("Seleccione uno...");
             CrearLibroFormatoCombobox.addItem("MP3");
@@ -1371,7 +1381,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
             CrearLibroLinktxt.setEnabled(false);
             CrearLibroDuraciontxt.setEnabled(false);
             CrearLibroNarradorComboBox.setEnabled(false);
-            
+
             CrearLibroFormatoCombobox.removeAllItems();
             CrearLibroFormatoCombobox.addItem("Seleccione uno...");
             CrearLibroFormatoCombobox.addItem("Pasta dura");
@@ -1388,7 +1398,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
             CrearLibroLinktxt.setEnabled(true);
             CrearLibroDuraciontxt.setEnabled(false);
             CrearLibroNarradorComboBox.setEnabled(false);
-            
+
             CrearLibroFormatoCombobox.removeAllItems();
             CrearLibroFormatoCombobox.addItem("Seleccione uno...");
             CrearLibroFormatoCombobox.addItem("EPUB");
@@ -1399,454 +1409,435 @@ public class MegaferiaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_CrearLibroTipoDigitalRBtnActionPerformed
 
     private void CrearStandBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearStandBtnActionPerformed
-String id = CrearStandIDtxt.getText();
-    String price = CrearStandPreciotxt.getText();
+        String id = CrearStandIDtxt.getText();
+        String price = CrearStandPreciotxt.getText();
 
-    Response response = StandController.createStand(id, price);
+        Response response = StandController.createStand(id, price);
 
-    if (response.getStatus() >= 500) {
-        JOptionPane.showMessageDialog(null, response.getMessage(),"Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
-    } else if (response.getStatus() >= 400) {
-        JOptionPane.showMessageDialog(null,response.getMessage(),"Error " + response.getStatus(),JOptionPane.WARNING_MESSAGE);
-    } else {
-        JOptionPane.showMessageDialog(null,response.getMessage(),"Mensaje",JOptionPane.INFORMATION_MESSAGE);
-        
-        CrearStandIDtxt.setText("");
-        CrearStandPreciotxt.setText("");
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
 
-        
-        Stand stand = (Stand) response.getObject();
-        ComprarStandIDStandsComboBox.addItem("" + stand.getId());
-    }
+            CrearStandIDtxt.setText("");
+            CrearStandPreciotxt.setText("");
+
+            Stand stand = (Stand) response.getObject();
+            ComprarStandIDStandsComboBox.addItem("" + stand.getId());
+        }
     }//GEN-LAST:event_CrearStandBtnActionPerformed
 
     private void CrearAutorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearAutorBtnActionPerformed
-    String id = CreatePersonaIDBtn.getText();
-    String firstname = CreatePersonaNombreBtn.getText();
-    String lastname = CreatePersonaApellidoBtn.getText();
+        String id = CreatePersonaIDBtn.getText();
+        String firstname = CreatePersonaNombreBtn.getText();
+        String lastname = CreatePersonaApellidoBtn.getText();
 
-    Response response = AuthorController.createAuthor(id, firstname, lastname);
+        Response response = AuthorController.createAuthor(id, firstname, lastname);
 
-    if (response.getStatus() >= 500) {JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
 
-    } else if (response.getStatus() >= 400) {JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
 
-    } else {JOptionPane.showMessageDialog(null, response.getMessage(),"Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
 
-        
-        CreatePersonaIDBtn.setText("");
-        CreatePersonaNombreBtn.setText("");
-        CreatePersonaApellidoBtn.setText("");
+            CreatePersonaIDBtn.setText("");
+            CreatePersonaNombreBtn.setText("");
+            CreatePersonaApellidoBtn.setText("");
 
-        
-        Author author = (Author) response.getObject();
-        String display = author.getId() + " - " + author.getFirstname() + " " + author.getLastname();
+            Author author = (Author) response.getObject();
+            String display = author.getId() + " - " + author.getFirstname() + " " + author.getLastname();
 
-        CrearLibroAutoresComboBox.addItem(display);
-        ConsultasAdicionalesAutorComboBox.addItem(display);
-    }
+            CrearLibroAutoresComboBox.addItem(display);
+            ConsultasAdicionalesAutorComboBox.addItem(display);
+        }
     }//GEN-LAST:event_CrearAutorBtnActionPerformed
 
     private void CrearGerenteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearGerenteBtnActionPerformed
-    String id = CreatePersonaIDBtn.getText();
-    String firstname = CreatePersonaNombreBtn.getText();
-    String lastname = CreatePersonaApellidoBtn.getText();
+        String id = CreatePersonaIDBtn.getText();
+        String firstname = CreatePersonaNombreBtn.getText();
+        String lastname = CreatePersonaApellidoBtn.getText();
 
-    Response response = ManagerController.createManager(id, firstname, lastname);
+        Response response = ManagerController.createManager(id, firstname, lastname);
 
-    if (response.getStatus() >= 500) {JOptionPane.showMessageDialog(null, response.getMessage(),"Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
 
-    } else if (response.getStatus() >= 400) {JOptionPane.showMessageDialog(null, response.getMessage(),"Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
 
-    } else {
+        } else {
 
-        JOptionPane.showMessageDialog(null, response.getMessage(),"Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
 
-        CreatePersonaIDBtn.setText("");
-        CreatePersonaNombreBtn.setText("");
-        CreatePersonaApellidoBtn.setText("");
+            CreatePersonaIDBtn.setText("");
+            CreatePersonaNombreBtn.setText("");
+            CreatePersonaApellidoBtn.setText("");
 
-        
-        Manager manager = (Manager) response.getObject();
-        String display = manager.getId() + " - " + manager.getFirstname() + " " + manager.getLastname();
+            Manager manager = (Manager) response.getObject();
+            String display = manager.getId() + " - " + manager.getFirstname() + " " + manager.getLastname();
 
-        CrearEditorialGerenteComboBox.addItem(display);
+            CrearEditorialGerenteComboBox.addItem(display);
         }
     }//GEN-LAST:event_CrearGerenteBtnActionPerformed
 
     private void CrearNarradorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearNarradorBtnActionPerformed
- Response response = NarratorController.createNarrator(
-            CreatePersonaIDBtn.getText(),
-            CreatePersonaNombreBtn.getText(),
-            CreatePersonaApellidoBtn.getText()
-    );
+        Response response = NarratorController.createNarrator(
+                CreatePersonaIDBtn.getText(),
+                CreatePersonaNombreBtn.getText(),
+                CreatePersonaApellidoBtn.getText()
+        );
 
-    if (response.getStatus() >= 500) {
-        JOptionPane.showMessageDialog(this, response.getMessage(), "Error Interno", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Error Interno", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    if (response.getStatus() >= 400) {
-        JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(this, response.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    JOptionPane.showMessageDialog(this, response.getMessage(), "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, response.getMessage(), "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
 
-    Narrator narrator = (Narrator) response.getObject();
+        Narrator narrator = (Narrator) response.getObject();
 
-    CrearLibroNarradorComboBox.addItem(
-            narrator.getId() + " - " + narrator.getFirstname() + " " + narrator.getLastname()
-    );
+        CrearLibroNarradorComboBox.addItem(narrator.getId() + " - " + narrator.getFirstname() + " " + narrator.getLastname()
+        );
     }//GEN-LAST:event_CrearNarradorBtnActionPerformed
 
     private void CrearEditorialBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearEditorialBtnActionPerformed
-        // TODO add your handling code here:
         String nit = CrearEditorialNITBtn.getText();
         String name = CrearEditorialNombreBtn.getText();
         String address = CrearEditorialDireccionBtn.getText();
-        String[] managerData = CrearEditorialGerenteComboBox.getItemAt(CrearEditorialGerenteComboBox.getSelectedIndex()).split(" - ");
-        
-        long managerId = Long.parseLong(managerData[0]);
-        
-        Manager manager = null;
-        for (Manager manag : this.managers) {
-            if (manag.getId() == managerId) {
-                manager = manag;
-            }
+
+        String selected = CrearEditorialGerenteComboBox.getSelectedItem().toString();
+        String managerIdString = selected.split(" - ")[0];
+
+        Response response = PublisherController.createPublisher(nit, name, address, managerIdString);
+
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        
-        this.publishers.add(new Publisher(nit, name, address, manager));
-        
-        CrearLibroEditorialComboBox.addItem(name + " (" + nit + ")");
-        ComprarStandEditorialesComboBox.addItem(name + " (" + nit + ")");
+
+        if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+        CrearEditorialNITBtn.setText("");
+        CrearEditorialNombreBtn.setText("");
+        CrearEditorialDireccionBtn.setText("");
+
+        Publisher created = (Publisher) response.getObject();
+        String display = created.getName() + " (" + created.getNit() + ")";
+
+        CrearLibroEditorialComboBox.addItem(display);
+        ComprarStandEditorialesComboBox.addItem(display);
+
     }//GEN-LAST:event_CrearEditorialBtnActionPerformed
 
     private void CrearLibroAgregarAutorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearLibroAgregarAutorBtnActionPerformed
-        // TODO add your handling code here:
-        String author = CrearLibroAutoresComboBox.getItemAt(CrearLibroAutoresComboBox.getSelectedIndex());
-        CrearLibroAutoresAreatxt.append(author + "\n");
+        String author = CrearLibroAutoresComboBox.getSelectedItem().toString();
+
+        String currentText = CrearLibroAutoresAreatxt.getText();
+
+        /////////////
+        boolean alreadyExists = false;
+        for (String line : currentText.split("\n")) {
+            if (line.trim().equals(author)) {
+                alreadyExists = true;
+                break;
+            }
+        }
+        /////////////
+        if (!alreadyExists) {
+            CrearLibroAutoresAreatxt.append(author + "\n");
+        }
     }//GEN-LAST:event_CrearLibroAgregarAutorBtnActionPerformed
 
     private void CrearLibroEliminarAutorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearLibroEliminarAutorBtnActionPerformed
-        // TODO add your handling code here:
         String author = CrearLibroAutoresComboBox.getItemAt(CrearLibroAutoresComboBox.getSelectedIndex());
-        CrearLibroAutoresAreatxt.setText(CrearLibroAutoresAreatxt.getText().replace(author + "\n", ""));
+
+        String updatedText = BookController.removeAuthorFromTextArea(author, CrearLibroAutoresAreatxt.getText());
+
+        CrearLibroAutoresAreatxt.setText(updatedText);
     }//GEN-LAST:event_CrearLibroEliminarAutorBtnActionPerformed
 
     private void CrearLibroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearLibroBtnActionPerformed
-        // TODO add your handling code here:
-        String title = CrearLibroTitulotxt.getText();
-        String[] authorsData = CrearLibroAutoresAreatxt.getText().split("\n");
-        String isbn = CrearLibroISBNtxt.getText();
-        String genre = CrearLibroGeneroComboBox.getItemAt(CrearLibroGeneroComboBox.getSelectedIndex());
-        String format = CrearLibroFormatoCombobox.getItemAt(CrearLibroFormatoCombobox.getSelectedIndex());
-        double value = Double.parseDouble(CrearLibroValortxt.getText());
-        String publisherData = CrearLibroEditorialComboBox.getItemAt(CrearLibroEditorialComboBox.getSelectedIndex());
-        
-        ArrayList<Author> authors = new ArrayList<>();
-        for (String authorData : authorsData) {
-            long authorId = Long.parseLong(authorData.split(" - ")[0]);
-            for (Author author : this.authors) {
-                if (author.getId() == authorId) {
-                    authors.add(author);
+        /////////////////////
+        try {
+
+            String title = CrearLibroTitulotxt.getText().trim();
+            String isbn = CrearLibroISBNtxt.getText().trim();
+            String genre = CrearLibroGeneroComboBox.getSelectedItem().toString();
+            String format = CrearLibroFormatoCombobox.getSelectedItem().toString();
+            double value = Double.parseDouble(CrearLibroValortxt.getText().trim());
+
+            ArrayList<Long> authorIds = new ArrayList<>();
+            for (String line : CrearLibroAutoresAreatxt.getText().split("\n")) {
+                if (!line.isBlank()) {
+                    authorIds.add(Long.parseLong(line.split(" - ")[0]));
                 }
             }
-        }
-        
-        String publisherNit = publisherData.split(" ")[1].replace("(", "").replace(")", "");
-        
-        Publisher publisher = null;
-        for (Publisher publish : this.publishers) {
-            if (publish.getNit().equals(publisherNit)) {
-                publisher = publish;
-            }
-        }
-        
-        if (CrearLibroTipoImpresoRBtn.isSelected()) {
-            int pages = Integer.parseInt(CrearLibroNroPaginastxt.getText());
-            int copies = Integer.parseInt(CrearLibroNroEjemplartxt.getText());
-            
-            this.books.add(new PrintedBook(title, authors, isbn, genre, format, value, publisher, pages, copies));
-        }
-        if (CrearLibroTipoDigitalRBtn.isSelected()) {
-            String hyperlink = CrearLibroLinktxt.getText();
-            if (hyperlink.equals("")) {
-                this.books.add(new DigitalBook(title, authors, isbn, genre, format, value, publisher));
+
+            Publisher selected = (Publisher) CrearLibroEditorialComboBox.getSelectedItem();
+            String publisherNIT = selected.getNit();
+
+
+            Response response;
+
+            if (CrearLibroTipoImpresoRBtn.isSelected()) {
+                int pages = Integer.parseInt(CrearLibroNroPaginastxt.getText().trim());
+                int copies = Integer.parseInt(CrearLibroNroEjemplartxt.getText().trim());
+
+                response = BookController.createPrintedBook(title, authorIds, isbn, genre, format, value, publisherNIT, pages, copies);
+
+            } else if (CrearLibroTipoDigitalRBtn.isSelected()) {
+                String hyperlink = CrearLibroLinktxt.getText().trim();
+                response = BookController.createDigitalBook(title, authorIds, isbn, genre, format, value, publisherNIT, hyperlink);
+
+            } else if (CrearLibroTipoRBtn.isSelected()) {
+                int duration = Integer.parseInt(CrearLibroDuraciontxt.getText().trim());
+                long narratorId = Long.parseLong(CrearLibroNarradorComboBox.getSelectedItem().toString().split(" - ")[0]);
+
+                response = BookController.createAudioBook(title, authorIds, isbn, genre, format, value, publisherNIT, duration, narratorId);
+
             } else {
-                this.books.add(new DigitalBook(title, authors, isbn, genre, format, value, publisher, hyperlink));
+                response = new Response("Debe seleccionar un tipo de libro", Status.BAD_REQUEST);
             }
-        }
-        if (CrearLibroTipoRBtn.isSelected()) {
-            int duration = Integer.parseInt(CrearLibroDuraciontxt.getText());
-            String[] narratorData = CrearLibroNarradorComboBox.getItemAt(CrearLibroNarradorComboBox.getSelectedIndex()).split(" - ");
+
             
-            long narratorId = Long.parseLong(narratorData[0]);
-            
-            Narrator narrator = null;
-            for (Narrator narrat : this.narrators) {
-                if (narrat.getId() == narratorId) {
-                    narrator = narrat;
-                }
+            if (response.getStatus() >= 500) {
+                JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+            } else if (response.getStatus() >= 400) {
+                JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+                CrearLibroTitulotxt.setText("");
+                CrearLibroAutoresAreatxt.setText("");
+                CrearLibroISBNtxt.setText("");
+                CrearLibroValortxt.setText("");
             }
-            
-            this.books.add(new AudioBook(title, authors, isbn, genre, format, value, publisher, duration, narrator));
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar valores numéricos válidos para precio, páginas, copias o duración.",
+                    "Error de formato", JOptionPane.WARNING_MESSAGE);
         }
+/////////////////////////////////
     }//GEN-LAST:event_CrearLibroBtnActionPerformed
 
     private void ComprarStandAgregarStandBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprarStandAgregarStandBtnActionPerformed
-        // TODO add your handling code here:
-        String stand = ComprarStandIDStandsComboBox.getItemAt(ComprarStandIDStandsComboBox.getSelectedIndex());
-        ComprarStandStandsAreatxt.append(stand + "\n");
+////////////////////
+        String stand = ComprarStandIDStandsComboBox.getSelectedItem().toString();
+
+        Response response = StandSelectionController.addStand(stand);
+
+        if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            
+            ComprarStandStandsAreatxt.append(stand + "\n");
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+/////////////////
     }//GEN-LAST:event_ComprarStandAgregarStandBtnActionPerformed
 
     private void ComprarStandEliminarStandBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprarStandEliminarStandBtnActionPerformed
-        // TODO add your handling code here:
-        String stand = ComprarStandIDStandsComboBox.getItemAt(ComprarStandIDStandsComboBox.getSelectedIndex());
-        ComprarStandStandsAreatxt.setText(ComprarStandStandsAreatxt.getText().replace(stand + "\n", ""));
+        //////////////
+        String stand = ComprarStandIDStandsComboBox.getSelectedItem().toString();
+
+        Response response = StandSelectionController.removeStand(stand);
+
+        if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            
+            String currentText = ComprarStandStandsAreatxt.getText();
+            ComprarStandStandsAreatxt.setText(currentText.replace(stand + "\n", ""));
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+        /////////////
     }//GEN-LAST:event_ComprarStandEliminarStandBtnActionPerformed
 
     private void ComprarStandAgregarEditorialBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprarStandAgregarEditorialBtnActionPerformed
-        // TODO add your handling code here:
-        String publisher = ComprarStandEditorialesComboBox.getItemAt(ComprarStandEditorialesComboBox.getSelectedIndex());
-        ComprarStandEditorialesAreatxt.append(publisher + "\n");
+        //////////
+        String publisher = ComprarStandEditorialesComboBox.getSelectedItem().toString();
+
+        Response response = PublisherSelectionController.addEditorial(publisher);
+
+        if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            
+            ComprarStandEditorialesAreatxt.append(publisher + "\n");
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+        /////////
     }//GEN-LAST:event_ComprarStandAgregarEditorialBtnActionPerformed
 
     private void ComprarStandEliminarEditorialBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprarStandEliminarEditorialBtnActionPerformed
-        // TODO add your handling code here:
-        String publisher = ComprarStandEditorialesComboBox.getItemAt(ComprarStandEditorialesComboBox.getSelectedIndex());
-        ComprarStandEditorialesAreatxt.setText(ComprarStandEditorialesAreatxt.getText().replace(publisher + "\n", ""));
+        //////
+        String publisher = ComprarStandEditorialesComboBox.getSelectedItem().toString();
+
+        Response response = PublisherSelectionController.removeEditorial(publisher);
+
+        if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            
+            String currentText = ComprarStandEditorialesAreatxt.getText();
+            ComprarStandEditorialesAreatxt.setText(currentText.replace(publisher + "\n", ""));
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+        ///////
     }//GEN-LAST:event_ComprarStandEliminarEditorialBtnActionPerformed
 
     private void ComprarStandBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprarStandBtnActionPerformed
-        // TODO add your handling code here:
-        String[] standIds = ComprarStandStandsAreatxt.getText().split("\n");
-        String[] publishersData = ComprarStandEditorialesAreatxt.getText().split("\n");
-        
-        ArrayList<Stand> stands = new ArrayList<>();
-        for (String standId : standIds) {
-            for (Stand stand : this.stands) {
-                if (stand.getId() == Long.parseLong(standId)) {
-                    stands.add(stand);
-                }
-            }
+        ///////////
+        ArrayList<String> selectedStands = StandSelectionController.getSelectedStands();
+        ArrayList<String> selectedEditorials = PublisherSelectionController.getSelectedEditorials();
+
+        if (selectedStands.isEmpty() || selectedEditorials.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un Stand y una Editorial", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        
-        ArrayList<Publisher> publishers = new ArrayList<>();
-        for (String publisherData : publishersData) {
-            String publisherNit = publisherData.split(" ")[1].replace("(", "").replace(")", "");
-            for (Publisher publisher : this.publishers) {
-                if (publisher.getNit().equals(publisherNit)) {
-                    publishers.add(publisher);
-                }
-            }
+
+        Response response = PurchaseStandController.completePurchase(selectedStands, selectedEditorials);
+
+        if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(),"Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(),"Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+            
+            ComprarStandStandsAreatxt.setText("");
+            ComprarStandEditorialesAreatxt.setText("");
         }
-        
-        for (Stand stand : stands) {
-            for (Publisher publisher : publishers) {
-                stand.addPublisher(publisher);
-                publisher.addStand(stand);
-            }
-        }
+        ////////////
     }//GEN-LAST:event_ComprarStandBtnActionPerformed
 
     private void ConsultarEditorialesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarEditorialesBtnActionPerformed
-        // TODO add your handling code here:
+        ////////////////
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        for (Publisher publisher : this.publishers) {
-            model.addRow(new Object[]{publisher.getNit(), publisher.getName(), publisher.getAddress(), publisher.getManager().getFullname(), publisher.getStandQuantity()});
+
+        
+        ArrayList<Object[]> tableData = PublisherController.getPublisherTableData();
+        for (Object[] row : tableData) {
+            model.addRow(row);
         }
+        //////////////////
     }//GEN-LAST:event_ConsultarEditorialesBtnActionPerformed
 
     private void ConsultarPersonasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarPersonasBtnActionPerformed
-        // TODO add your handling code here:
+        //////////////
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
-        for (Author author : this.authors) {
-            model.addRow(new Object[]{author.getId(), author.getFullname(), "Autor", "-", author.getBookQuantity()});
+
+        ArrayList<Object[]> tableData = PersonController.getPersonTableData();
+        for (Object[] row : tableData) {
+            model.addRow(row);
         }
-        for (Manager manager : this.managers) {
-            model.addRow(new Object[]{manager.getId(), manager.getFullname(), "Gerente", manager.getPublisher().getName(), 0});
-        }
-        for (Narrator narrator : this.narrators) {
-            model.addRow(new Object[]{narrator.getId(), narrator.getFullname(), "Narrador", "-", narrator.getBookQuantity()});
-        }
+        //////////
     }//GEN-LAST:event_ConsultarPersonasBtnActionPerformed
 
     private void ConsultarStandsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarStandsBtnActionPerformed
-        // TODO add your handling code here:
+        ////////////////
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+
         model.setRowCount(0);
-        for (Stand stand : this.stands) {
-            String publishers = "";
-            if (stand.getPublisherQuantity() > 0) {
-                publishers += stand.getPublishers().get(0).getName();
-                for (int i = 1; i < stand.getPublisherQuantity(); i++) {
-                    publishers += (", " + stand.getPublishers().get(i).getName());
-                }
-            }
-            model.addRow(new Object[]{stand.getId(), stand.getPrice(), stand.getPublisherQuantity() > 0 ? "Si" : "No", publishers});
+
+        for (Object[] row : StandController.getStandTableData()) {
+            model.addRow(row);
         }
+        ////////
     }//GEN-LAST:event_ConsultarStandsBtnActionPerformed
 
     private void ConsultarLibrosBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarLibrosBtnActionPerformed
-        // TODO add your handling code here:
-        String search = ShowLibrosComboBoxTxt.getItemAt(ShowLibrosComboBoxTxt.getSelectedIndex());
-        
-        DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
-        model.setRowCount(0);
-        
-        if (search.equals("Libros Impresos")) {
-            for (Book book : this.books) {
-                if (book instanceof PrintedBook printedBook) {
-                    String authors = printedBook.getAuthors().get(0).getFullname();
-                    for (int i = 1; i < printedBook.getAuthors().size(); i++) {
-                        authors += (", " + printedBook.getAuthors().get(i).getFullname());
-                    }
-                    model.addRow(new Object[]{printedBook.getTitle(), authors, printedBook.getIsbn(), printedBook.getGenre(), printedBook.getFormat(), printedBook.getValue(), printedBook.getPublisher().getName(), printedBook.getCopies(), printedBook.getPages(), "-", "-", "-"});
-                }
-            }
+        /////////////////////
+        String selectedBookTypeFilter = (String) ShowLibrosComboBoxTxt.getSelectedItem();
+
+        DefaultTableModel booksTableModel = (DefaultTableModel) jTable4.getModel();
+        booksTableModel.setRowCount(0);
+
+        ArrayList<Object[]> booksTableRows = BookController.getBooksTableRows(selectedBookTypeFilter, this.books);
+
+        for (Object[] bookTableRow : booksTableRows) {
+            booksTableModel.addRow(bookTableRow);
         }
-        if (search.equals("Libros Digitales")) {
-            for (Book book : this.books) {
-                if (book instanceof DigitalBook digitalBook) {
-                    String authors = digitalBook.getAuthors().get(0).getFullname();
-                    for (int i = 1; i < digitalBook.getAuthors().size(); i++) {
-                        authors += (", " + digitalBook.getAuthors().get(i).getFullname());
-                    }
-                    model.addRow(new Object[]{digitalBook.getTitle(), authors, digitalBook.getIsbn(), digitalBook.getGenre(), digitalBook.getFormat(), digitalBook.getValue(), digitalBook.getPublisher().getName(), "-", "-", digitalBook.hasHyperlink() ? digitalBook.getHyperlink() : "No", "-", "-"});
-                }
-            }
-        }
-        if (search.equals("Audiolibros")) {
-            for (Book book : this.books) {
-                if (book instanceof AudioBook audiobook) {
-                    String authors = audiobook.getAuthors().get(0).getFullname();
-                    for (int i = 1; i < audiobook.getAuthors().size(); i++) {
-                        authors += (", " + audiobook.getAuthors().get(i).getFullname());
-                    }
-                    model.addRow(new Object[]{audiobook.getTitle(), authors, audiobook.getIsbn(), audiobook.getGenre(), audiobook.getFormat(), audiobook.getValue(), audiobook.getPublisher().getName(), "-", "-", "-", audiobook.getNarrador().getFullname(), audiobook.getDuration()});
-                }
-            }
-        }
-        if (search.equals("Todos los Libros")) {
-            for (Book book : this.books) { 
-                String authors = book.getAuthors().get(0).getFullname();
-                for (int i = 1; i < book.getAuthors().size(); i++) {
-                    authors += (", " + book.getAuthors().get(i).getFullname());
-                }
-                if (book instanceof PrintedBook printedBook) {
-                    model.addRow(new Object[]{printedBook.getTitle(), authors, printedBook.getIsbn(), printedBook.getGenre(), printedBook.getFormat(), printedBook.getValue(), printedBook.getPublisher().getName(), printedBook.getCopies(), printedBook.getPages(), "-", "-", "-"});
-                }
-                if (book instanceof DigitalBook digitalBook) {
-                    model.addRow(new Object[]{digitalBook.getTitle(), authors, digitalBook.getIsbn(), digitalBook.getGenre(), digitalBook.getFormat(), digitalBook.getValue(), digitalBook.getPublisher().getName(), "-", "-", digitalBook.hasHyperlink() ? digitalBook.getHyperlink() : "No", "-", "-"});
-                }
-                if (book instanceof AudioBook audiobook) {
-                    model.addRow(new Object[]{audiobook.getTitle(), authors, audiobook.getIsbn(), audiobook.getGenre(), audiobook.getFormat(), audiobook.getValue(), audiobook.getPublisher().getName(), "-", "-", "-", audiobook.getNarrador().getFullname(), audiobook.getDuration()});
-                }
-            }
-        }
+        ////////////
     }//GEN-LAST:event_ConsultarLibrosBtnActionPerformed
 
     private void ConsultasAdicionalesAutorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultasAdicionalesAutorBtnActionPerformed
-        // TODO add your handling code here:
-        String[] authorData = ConsultasAdicionalesAutorComboBox.getItemAt(ConsultasAdicionalesAutorComboBox.getSelectedIndex()).split(" - ");
-        long authorId = Long.parseLong(authorData[0]);
-        
-        Author author = null;
-        for (Author auth : this.authors) {
-            if (auth.getId() == authorId) {
-                author = auth;
-            }
+    ////////////
+        String selectedAuthorString = (String) ConsultasAdicionalesAutorComboBox.getSelectedItem();
+
+        Author selectedAuthor = AuthorController.getAuthorFromComboString(selectedAuthorString);
+
+        if (selectedAuthor == null) {
+            JOptionPane.showMessageDialog(null, "No se encontró el autor seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        
+
+        ArrayList<Object[]> booksTableRows = BookController.getBooksByAuthorTableRows(selectedAuthor);
+
         DefaultTableModel model = (DefaultTableModel) jTable5.getModel();
         model.setRowCount(0);
-        
-        for (Book book : author.getBooks()) { 
-            String authors = book.getAuthors().get(0).getFullname();
-            for (int i = 1; i < book.getAuthors().size(); i++) {
-                authors += (", " + book.getAuthors().get(i).getFullname());
-            }
-            if (book instanceof PrintedBook printedBook) {
-                model.addRow(new Object[]{printedBook.getTitle(), authors, printedBook.getIsbn(), printedBook.getGenre(), printedBook.getFormat(), printedBook.getValue(), printedBook.getPublisher().getName(), printedBook.getCopies(), printedBook.getPages(), "-", "-", "-"});
-            }
-            if (book instanceof DigitalBook digitalBook) {
-                model.addRow(new Object[]{digitalBook.getTitle(), authors, digitalBook.getIsbn(), digitalBook.getGenre(), digitalBook.getFormat(), digitalBook.getValue(), digitalBook.getPublisher().getName(), "-", "-", digitalBook.hasHyperlink() ? digitalBook.getHyperlink() : "No", "-", "-"});
-            }
-            if (book instanceof AudioBook audiobook) {
-                model.addRow(new Object[]{audiobook.getTitle(), authors, audiobook.getIsbn(), audiobook.getGenre(), audiobook.getFormat(), audiobook.getValue(), audiobook.getPublisher().getName(), "-", "-", "-", audiobook.getNarrador().getFullname(), audiobook.getDuration()});
-            }
+
+        for (Object[] row : booksTableRows) {
+            model.addRow(row);
         }
+    ///////
     }//GEN-LAST:event_ConsultasAdicionalesAutorBtnActionPerformed
 
     private void ConsultasAdicionalesFormatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultasAdicionalesFormatoBtnActionPerformed
-        // TODO add your handling code here:
-        String format = ConsultasAdicionalesFormatoComboBox.getItemAt(ConsultasAdicionalesFormatoComboBox.getSelectedIndex());
-        
+        String format = ConsultasAdicionalesFormatoComboBox.getSelectedItem().toString();
+
+        ArrayList<Object[]> rows = ConsultaAdicionalController.getBooksByFormatTableRows(format);
+
         DefaultTableModel model = (DefaultTableModel) jTable5.getModel();
         model.setRowCount(0);
-        
-        for (Book book : this.books) { 
-            if (book.getFormat().equals(format)) {
-                String authors = book.getAuthors().get(0).getFullname();
-                for (int i = 1; i < book.getAuthors().size(); i++) {
-                    authors += (", " + book.getAuthors().get(i).getFullname());
-                }
-                if (book instanceof PrintedBook printedBook) {
-                    model.addRow(new Object[]{printedBook.getTitle(), authors, printedBook.getIsbn(), printedBook.getGenre(), printedBook.getFormat(), printedBook.getValue(), printedBook.getPublisher().getName(), printedBook.getCopies(), printedBook.getPages(), "-", "-", "-"});
-                }
-                if (book instanceof DigitalBook digitalBook) {
-                    model.addRow(new Object[]{digitalBook.getTitle(), authors, digitalBook.getIsbn(), digitalBook.getGenre(), digitalBook.getFormat(), digitalBook.getValue(), digitalBook.getPublisher().getName(), "-", "-", digitalBook.hasHyperlink() ? digitalBook.getHyperlink() : "No", "-", "-"});
-                }
-                if (book instanceof AudioBook audiobook) {
-                    model.addRow(new Object[]{audiobook.getTitle(), authors, audiobook.getIsbn(), audiobook.getGenre(), audiobook.getFormat(), audiobook.getValue(), audiobook.getPublisher().getName(), "-", "-", "-", audiobook.getNarrador().getFullname(), audiobook.getDuration()});
-                }
-            }
+
+        for (Object[] row : rows) {
+            model.addRow(row);
         }
     }//GEN-LAST:event_ConsultasAdicionalesFormatoBtnActionPerformed
 
     private void ConsultasAdicionalesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultasAdicionalesBtnActionPerformed
-        // TODO add your handling code here:
-        ArrayList<Author> authorsMax = new ArrayList<>();
-        int maxPublishers = -1;
-        for (Author author : this.authors) {
-            if (author.getPublisherQuantity() > maxPublishers) {
-                maxPublishers = author.getPublisherQuantity();
-                authorsMax.clear();
-                authorsMax.add(author);
-            } else if (author.getPublisherQuantity() == maxPublishers) {
-                authorsMax.add(author);
-            }
-        }
-        
-        DefaultTableModel model = (DefaultTableModel) jTable6.getModel();
-        model.setRowCount(0);
-        
-        for (Author author : authorsMax) {
-            model.addRow(new Object[]{author.getId(), author.getFullname(), maxPublishers});
-        }
+    Response response = ConsultaAdicionalController.getAuthorsWithMaxPublishers(this.authors);
+
+    
+    if (response.getStatus() >= Status.BAD_REQUEST) {
+        JOptionPane.showMessageDialog(null, response.getMessage(),"Error " + response.getStatus(),JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    
+    DefaultTableModel model = (DefaultTableModel) jTable6.getModel();
+    model.setRowCount(0);
+
+    ArrayList<Object[]> rows = (ArrayList<Object[]>) response.getObject();
+
+    for (Object[] row : rows) {
+        model.addRow(row);
+    }
+
+    JOptionPane.showMessageDialog(null,response.getMessage(),"OK",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_ConsultasAdicionalesBtnActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        System.setProperty("flatlaf.useNativeLibrary", "false");
-        
-        try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (Exception ex) {
-            System.err.println("Failed to initialize LaF");
-        }
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MegaferiaFrame().setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ComprarStandAgregarEditorialBtn;
