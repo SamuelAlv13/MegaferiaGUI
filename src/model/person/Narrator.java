@@ -4,6 +4,8 @@
  */
 package model.person;
 
+import model.interfaze.Prototype;
+import model.interfaze.Add_Book;
 import model.book.AudioBook;
 import java.util.ArrayList;
 
@@ -11,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author edangulo
  */
-public class Narrator extends Person {
+public class Narrator extends Person implements Add_Book<AudioBook>, Prototype<Narrator> {
     
     private ArrayList<AudioBook> books;
 
@@ -24,10 +26,13 @@ public class Narrator extends Person {
         return this.books.size();
     }
     
+    // ---- AddBook method----
+    @Override
     public void addBook(AudioBook book) {
         this.books.add(book);
     }
-     /////PROTOTYPE MVCEXAMPLE
+    
+    // ---- Prototype ----
     @Override
     public Narrator clone() throws CloneNotSupportedException {
         return new Narrator(this.id, this.firstname, this.lastname);
