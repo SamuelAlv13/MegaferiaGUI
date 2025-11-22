@@ -4,14 +4,15 @@
  */
 package model.person;
 
+import model.interfaze.Prototype;
 import model.Publisher;
 
 /**
  *
  * @author edangulo
  */
-public class Manager extends Person {
-    
+public class Manager extends Person implements Prototype<Manager> {
+
     private Publisher publisher;
 
     public Manager(long id, String firstname, String lastname) {
@@ -25,11 +26,12 @@ public class Manager extends Person {
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
+    
+    // ---- Prototype ----
     @Override
     public Manager clone() throws CloneNotSupportedException {
-    Manager cloned = new Manager(this.id, this.firstname, this.lastname);
-    cloned.publisher = this.publisher; 
-    return cloned;
-}
-
+        Manager cloned = new Manager(this.id, this.firstname, this.lastname);
+        cloned.publisher = this.publisher; // shallow copy (correcto)
+        return cloned;
+    }
 }

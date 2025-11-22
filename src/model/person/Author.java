@@ -4,6 +4,8 @@
  */
 package model.person;
 
+import model.interfaze.Prototype;
+import model.interfaze.Add_Book;
 import model.book.Book;
 import java.util.ArrayList;
 import model.Publisher;
@@ -12,8 +14,8 @@ import model.Publisher;
  *
  * @author edangulo
  */
-public class Author extends Person {
-    
+public class Author extends Person implements Add_Book<Book>, Prototype<Author> {
+
     private ArrayList<Book> books;
 
     public Author(long id, String firstname, String lastname) {
@@ -24,15 +26,17 @@ public class Author extends Person {
     public ArrayList<Book> getBooks() {
         return books;
     }
-    
+
     public int getBookQuantity() {
         return this.books.size();
     }
-    
+
+    // ---- AddBook method ----
+    @Override
     public void addBook(Book book) {
         this.books.add(book);
     }
-    
+
     public int getPublisherQuantity() {
         ArrayList<Publisher> publishers = new ArrayList<>();
         for (Book book : this.books) {
@@ -42,9 +46,10 @@ public class Author extends Person {
         }
         return publishers.size();
     }
-     @Override
+
+    // ---- Prototype ----
+    @Override
     public Author clone() throws CloneNotSupportedException {
         return new Author(this.id, this.firstname, this.lastname);
     }
-    
 }
