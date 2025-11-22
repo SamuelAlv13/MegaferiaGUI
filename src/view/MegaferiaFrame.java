@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import model.Storage.Storage;
 
 /**
  *
@@ -1584,13 +1585,20 @@ public class MegaferiaFrame extends javax.swing.JFrame {
             ArrayList<Long> authorIds = new ArrayList<>();
             for (String line : CrearLibroAutoresAreatxt.getText().split("\n")) {
                 if (!line.isBlank()) {
-                    authorIds.add(Long.parseLong(line.split(" - ")[0]));
+                    authorIds.add(Long.valueOf(line.split(" - ")[0]));
                 }
             }
 
-            Publisher selected = (Publisher) CrearLibroEditorialComboBox.getSelectedItem();
-            String publisherNIT = selected.getNit();
+            String selectedPublisherString = CrearLibroEditorialComboBox.getSelectedItem().toString();
 
+
+            String publisherNIT = selectedPublisherString.substring(
+                    selectedPublisherString.indexOf("(") + 1,
+                    selectedPublisherString.indexOf(")")
+            );
+            Publisher publisher = Storage.getInstance().getPublisher(publisherNIT);
+
+            
 
             Response response;
 
@@ -1614,7 +1622,6 @@ public class MegaferiaFrame extends javax.swing.JFrame {
                 response = new Response("Debe seleccionar un tipo de libro", Status.BAD_REQUEST);
             }
 
-            
             if (response.getStatus() >= 500) {
                 JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
             } else if (response.getStatus() >= 400) {
@@ -1644,7 +1651,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
         if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            
+
             ComprarStandStandsAreatxt.append(stand + "\n");
             JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -1660,7 +1667,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
         if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            
+
             String currentText = ComprarStandStandsAreatxt.getText();
             ComprarStandStandsAreatxt.setText(currentText.replace(stand + "\n", ""));
             JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
@@ -1677,7 +1684,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
         if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            
+
             ComprarStandEditorialesAreatxt.append(publisher + "\n");
             JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -1693,7 +1700,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
         if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            
+
             String currentText = ComprarStandEditorialesAreatxt.getText();
             ComprarStandEditorialesAreatxt.setText(currentText.replace(publisher + "\n", ""));
             JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
@@ -1714,11 +1721,10 @@ public class MegaferiaFrame extends javax.swing.JFrame {
         Response response = PurchaseStandController.completePurchase(selectedStands, selectedEditorials);
 
         if (response.getStatus() >= 400) {
-            JOptionPane.showMessageDialog(null, response.getMessage(),"Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, response.getMessage(),"Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
 
-            
             ComprarStandStandsAreatxt.setText("");
             ComprarStandEditorialesAreatxt.setText("");
         }
@@ -1730,7 +1736,6 @@ public class MegaferiaFrame extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
-        
         ArrayList<Object[]> tableData = PublisherController.getPublisherTableData();
         for (Object[] row : tableData) {
             model.addRow(row);
@@ -1778,7 +1783,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_ConsultarLibrosBtnActionPerformed
 
     private void ConsultasAdicionalesAutorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultasAdicionalesAutorBtnActionPerformed
-    ////////////
+        ////////////
         String selectedAuthorString = (String) ConsultasAdicionalesAutorComboBox.getSelectedItem();
 
         Author selectedAuthor = AuthorController.getAuthorFromComboString(selectedAuthorString);
@@ -1796,7 +1801,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
         for (Object[] row : booksTableRows) {
             model.addRow(row);
         }
-    ///////
+        ///////
     }//GEN-LAST:event_ConsultasAdicionalesAutorBtnActionPerformed
 
     private void ConsultasAdicionalesFormatoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultasAdicionalesFormatoBtnActionPerformed
@@ -1813,31 +1818,28 @@ public class MegaferiaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_ConsultasAdicionalesFormatoBtnActionPerformed
 
     private void ConsultasAdicionalesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultasAdicionalesBtnActionPerformed
-    Response response = ConsultaAdicionalController.getAuthorsWithMaxPublishers(this.authors);
+        Response response = ConsultaAdicionalController.getAuthorsWithMaxPublishers(this.authors);
 
-    
-    if (response.getStatus() >= Status.BAD_REQUEST) {
-        JOptionPane.showMessageDialog(null, response.getMessage(),"Error " + response.getStatus(),JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (response.getStatus() >= Status.BAD_REQUEST) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    
-    DefaultTableModel model = (DefaultTableModel) jTable6.getModel();
-    model.setRowCount(0);
+        DefaultTableModel model = (DefaultTableModel) jTable6.getModel();
+        model.setRowCount(0);
 
-    ArrayList<Object[]> rows = (ArrayList<Object[]>) response.getObject();
+        ArrayList<Object[]> rows = (ArrayList<Object[]>) response.getObject();
 
-    for (Object[] row : rows) {
-        model.addRow(row);
-    }
+        for (Object[] row : rows) {
+            model.addRow(row);
+        }
 
-    JOptionPane.showMessageDialog(null,response.getMessage(),"OK",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, response.getMessage(), "OK", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_ConsultasAdicionalesBtnActionPerformed
 
     /**
      * @param args the command line arguments
      */
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ComprarStandAgregarEditorialBtn;

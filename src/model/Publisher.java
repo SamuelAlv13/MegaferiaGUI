@@ -60,6 +60,11 @@ public class Publisher {
         this.stands.add(stand);
     }
     
+    @Override
+        public String toString() {
+        return this.getName() + " (" + this.getNit() + ")";
+    }
+
     //Prototype
     public Publisher(Publisher other) {
         this.nit = other.nit;
