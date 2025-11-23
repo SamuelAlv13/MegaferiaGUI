@@ -7,13 +7,14 @@ package model;
 import model.person.Manager;
 import model.book.Book;
 import java.util.ArrayList;
+import model.interfaz.Prototype;
 
 /**
  *
  * @author edangulo
  */
-public class Publisher {
-    
+public class Publisher implements Prototype<Publisher> {
+
     private final String nit;
     private String name;
     private String address;
@@ -28,7 +29,7 @@ public class Publisher {
         this.manager = manager;
         this.books = new ArrayList<>();
         this.stands = new ArrayList<>();
-        
+
         this.manager.setPublisher(this);
     }
 
@@ -47,25 +48,25 @@ public class Publisher {
     public Manager getManager() {
         return manager;
     }
-    
+
     public int getStandQuantity() {
         return this.stands.size();
     }
-    
+
     public void addBook(Book book) {
         this.books.add(book);
     }
-    
+
     public void addStand(Stand stand) {
         this.stands.add(stand);
     }
-    
+
     @Override
-        public String toString() {
+    public String toString() {
         return this.getName() + " (" + this.getNit() + ")";
     }
 
-    //Prototype
+    // Constructor copia (para clonación)
     public Publisher(Publisher other) {
         this.nit = other.nit;
         this.name = other.name;
@@ -74,9 +75,10 @@ public class Publisher {
         this.books = new ArrayList<>(other.books);
         this.stands = new ArrayList<>(other.stands);
     }
-    
+
+    // Implementación de Prototype
+    @Override
     public Publisher clone() {
         return new Publisher(this);
     }
-    
 }

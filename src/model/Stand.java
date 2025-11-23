@@ -4,13 +4,14 @@
  */
 package model;
 import java.util.ArrayList;
+import model.interfaz.Prototype;
 
 /**
  *
  * @author edangulo
  */
-public class Stand {
-    
+public class Stand implements Prototype<Stand> {
+
     private long id;
     private double price;
     private ArrayList<Publisher> publishers;
@@ -20,7 +21,7 @@ public class Stand {
         this.price = price;
         this.publishers = new ArrayList<>();
     }
-    
+
     public void addPublisher(Publisher publisher) {
         this.publishers.add(publisher);
     }
@@ -34,18 +35,21 @@ public class Stand {
     }
 
     public ArrayList<Publisher> getPublishers() {
-        return publishers;
+        return new ArrayList<>(publishers);
     }
-    
+
     public int getPublisherQuantity() {
         return this.publishers.size();
     }
-     //(Prototype)
+
+    // Constructor copia (para clonación)
     public Stand(Stand other) {
         this.id = other.id;
         this.price = other.price;
         this.publishers = new ArrayList<>(other.publishers);
-    } 
+    }
+
+    // Implementación de Prototype
     @Override
     public Stand clone() {
         return new Stand(this);
