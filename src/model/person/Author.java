@@ -4,8 +4,8 @@
  */
 package model.person;
 
-import model.interfaze.Prototype;
-import model.interfaze.Add_Book;
+import model.interfaz.Prototype;
+import model.interfaz.Add_Book;
 import model.book.Book;
 import java.util.ArrayList;
 import model.Publisher;

@@ -7,12 +7,13 @@ package model.book;
 import java.util.ArrayList;
 import model.person.Author;
 import model.Publisher;
+import model.interfaz.Prototype;
 
 /**
  *
  * @author edangulo
  */
-public class PrintedBook extends Book {
+public class PrintedBook extends Book implements Prototype<PrintedBook> {
     
     private int pages;
     private int copies;
@@ -22,6 +23,12 @@ public class PrintedBook extends Book {
         this.pages = pages;
         this.copies = copies;
     }
+    // Constructor COPY (usado SOLO por clone)
+    public PrintedBook(PrintedBook other, ArrayList<Author> clonedAuthors) {
+        super(other.title,clonedAuthors,other.isbn,other.genre,other.format,other.value,other.publisher);
+        this.pages = other.pages;
+        this.copies = other.copies;
+    }
 
     public int getPages() {
         return pages;
@@ -30,10 +37,10 @@ public class PrintedBook extends Book {
     public int getCopies() {
         return copies;
     }
-    /////PROTOTYPE MVCEXAMPLE
+    // ---- Prototype ----
     @Override
     public PrintedBook clone() throws CloneNotSupportedException {
         ArrayList<Author> clonedAuthors = new ArrayList<>(this.authors);
-        return new PrintedBook(this.title, clonedAuthors, this.isbn, this.genre, this.format, this.value, this.publisher, this.pages, this.copies);
+        return new PrintedBook(this, clonedAuthors);
     }
 }

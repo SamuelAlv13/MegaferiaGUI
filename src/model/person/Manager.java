@@ -4,7 +4,7 @@
  */
 package model.person;
 
-import model.interfaze.Prototype;
+import model.interfaz.Prototype;
 import model.Publisher;
 
 /**

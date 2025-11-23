@@ -4,6 +4,7 @@
  */
 package controller;
 
+import Service.BookRegistration;
 import controller.utils.Response;
 import controller.utils.Status;
 import java.util.ArrayList;
@@ -73,7 +74,8 @@ public class BookController {
         if (!storage.addBook(book)) {
             return new Response("Ya existe un libro con el ISBN: " + isbn, Status.BAD_REQUEST);
         }
-
+        
+        new BookRegistration().registerBook(book);
         
         PrintedBook cloned;
         try {
@@ -131,6 +133,8 @@ public class BookController {
         if (!storage.addBook(book)) {
             return new Response("Ya existe un libro con el ISBN: " + isbn, Status.BAD_REQUEST);
         }
+        
+        new BookRegistration().registerBook(book);
 
         DigitalBook cloned;
         try {
@@ -189,6 +193,8 @@ public class BookController {
         if (!storage.addBook(book)) {
             return new Response("Ya existe un libro con el ISBN: " + isbn, Status.BAD_REQUEST);
         }
+        
+        new BookRegistration().registerBook(book);
 
         AudioBook cloned;
         try {
@@ -199,11 +205,6 @@ public class BookController {
 
         return new Response("Audiolibro creado correctamente", Status.CREATED, cloned);
     }
-    //hasta aqui esta medio organizado. me da pereza arreglar esto 
-    ////de aqui en adelante estan combinados todos los metodos
-    /////////////////////////////////////
-    /////////////////////////////////////
-    ////////////////////////////////////
 
     public static ArrayList<Object[]> getBooksTableRows(String bookTypeFilter, ArrayList<Book> allBooks) {
         ArrayList<Object[]> tableRows = new ArrayList<>();
@@ -386,8 +387,5 @@ public class BookController {
     }
 
     return rows;
-}
-    
-    
-    
+}    
 }

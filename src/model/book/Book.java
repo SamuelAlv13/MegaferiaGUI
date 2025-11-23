@@ -30,11 +30,6 @@ public abstract class Book {
         this.format = format;
         this.value = value;
         this.publisher = publisher;
-        
-        for (Author autor : this.authors) {
-            autor.addBook(this);
-        }
-        this.publisher.addBook(this);
     }
 
     public String getTitle() {

@@ -7,43 +7,65 @@ package model.book;
 import java.util.ArrayList;
 import model.person.Author;
 import model.Publisher;
+import model.interfaz.Prototype;
 
 /**
  *
  * @author edangulo
  */
-public class DigitalBook extends Book {
+public class DigitalBook extends Book implements Prototype<DigitalBook> {
     
     private boolean hasHyperlink;
     private String hyperlink;
 
-    public DigitalBook(String title, ArrayList<Author> authors, String isbn, String genre, String format, double value, Publisher publisher) {
+    // Constructor normal SIN hyperlink
+    public DigitalBook(String title, ArrayList<Author> authors, String isbn, 
+                       String genre, String format, double value, 
+                       Publisher publisher) {
+
         super(title, authors, isbn, genre, format, value, publisher);
         this.hasHyperlink = false;
         this.hyperlink = null;
     }
-    
-    public DigitalBook(String title, ArrayList<Author> authors, String isbn, String genre, String format, double value, Publisher publisher, String hyperlink) {
+
+    // Constructor normal CON hyperlink
+    public DigitalBook(String title, ArrayList<Author> authors, String isbn, 
+                       String genre, String format, double value, 
+                       Publisher publisher, String hyperlink) {
+
         super(title, authors, isbn, genre, format, value, publisher);
         this.hasHyperlink = true;
         this.hyperlink = hyperlink;
     }
 
+    // ------ COPY CONSTRUCTOR (usado SOLO para clone) ------
+    public DigitalBook(DigitalBook other, ArrayList<Author> clonedAuthors) {
+        super(
+            other.title,
+            clonedAuthors,
+            other.isbn,
+            other.genre,
+            other.format,
+            other.value,
+            other.publisher
+        );
+
+        this.hasHyperlink = other.hasHyperlink;
+        this.hyperlink = other.hyperlink;
+    }
+
     public boolean hasHyperlink() {
         return hasHyperlink;
     }
-    
+
     public String getHyperlink() {
         return hyperlink;
     }
-    /////PROTOTYPE MVCEXAMPLE
+
+    // ------ PROTOTYPE ------
     @Override
     public DigitalBook clone() throws CloneNotSupportedException {
         ArrayList<Author> clonedAuthors = new ArrayList<>(this.authors);
-        if (this.hasHyperlink) {
-            return new DigitalBook(this.title, clonedAuthors, this.isbn, this.genre, this.format, this.value, this.publisher, this.hyperlink);
-        }else{
-            return new DigitalBook(this.title, clonedAuthors, this.isbn, this.genre, this.format, this.value, this.publisher);
-        }
+        return new DigitalBook(this, clonedAuthors);
     }
 }
